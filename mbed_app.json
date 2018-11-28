@@ -14,7 +14,8 @@
         "ARM_UC_PROFILE_MBED_CLOUD_CLIENT=1",
         "ARM_UC_FEATURE_CRYPTO_PAL=0",
         "ARM_UC_FEATURE_CRYPTO_MBEDTLS=1",
-        "Mutex=PlatformMutex"
+        "Mutex=PlatformMutex",
+        "MBED_CONF_MBED_TRACE_ENABLE=1"
     ],
     "config": {
         "application-start-address": {
@@ -205,6 +206,35 @@
               "PAL_USE_HW_RTC=0",
               "PAL_INT_FLASH_NUM_SECTIONS=2"
             ]
-        }
+        },
+        "NRF52_DK": {
+           "flash-start-address"              : "FLASH_OFFSET_SOFTDEVICE",
+           "flash-size"                       : "(512*1024)",
+           "nvstore.area_1_address"           : "(MBED_CONF_APP_FLASH_START_ADDRESS+(1024*504)-140)",
+           "nvstore.area_1_size"              : "(4*1024)",
+           "nvstore.area_2_address"           : "(MBED_CONF_APP_FLASH_START_ADDRESS+(1024*508)-140)",
+           "nvstore.area_2_size"              : "(4*1024)",
+           "update-client.application-details": "(MBED_CONF_APP_FLASH_START_ADDRESS+140*1024)",
+           "application-start-address"        : "(MBED_CONF_APP_FLASH_START_ADDRESS+141*1024)",
+           "max-application-size"             : "DEFAULT_MAX_APPLICATION_SIZE",
+           "target.OUTPUT_EXT"                : "hex",
+           "update-client.storage-address"    : "(1024*512*1)",
+           "update-client.storage-size"       : "(1024*512*1)",
+           "update-client.storage-locations"  : 1,
+           "update-client.storage-page"       : 1,
+           "target.features_remove": [
+             "CRYPTOCELL310"
+           ],
+           "target.macros_remove": [
+             "MBEDTLS_CONFIG_HW_SUPPORT"
+           ],
+           "target.macros_add": [
+             "FLASH_OFFSET_SOFTDEVICE=0x23000",
+             "PAL_USE_INTERNAL_FLASH=1",
+             "PAL_USE_HW_ROT=0",
+             "PAL_USE_HW_RTC=0",
+             "PAL_INT_FLASH_NUM_SECTIONS=2"
+           ]
+        }     
     }
 }
