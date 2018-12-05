@@ -129,13 +129,19 @@ int checkActiveApplication(arm_uc_firmware_details_t *details)
                 uint32_t readSize = (remaining > BUFFER_SIZE) ?
                                     BUFFER_SIZE : remaining;
 
+                tr_debug("readSize: %" PRIu32, readSize);
+
                 /* read buffer using FlashIAP API for portability */
                 status = flash.read(buffer_array,
                                     appStart + (details->size - remaining),
                                     readSize);
 
+                tr_debug("flash.read return %i", status);
+
                 /* update hash */
                 mbedtls_sha256_update(&mbedtls_ctx, buffer_array, readSize);
+
+                tr_debug("after mbedtls_sha256_update");
 
                 /* update remaining bytes */
                 remaining -= readSize;
